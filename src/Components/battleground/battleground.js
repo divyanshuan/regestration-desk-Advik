@@ -19,7 +19,7 @@ const Battleground = () => {
     email: "",
     mobile: "",
     game: "",
-    type: "Battleground",
+    // type: "Battleground",
   });
   const Validation = (arr) => {
     if (
@@ -43,6 +43,7 @@ const Battleground = () => {
       swal("Enter all details", "", "error");
       return;
     } else {
+      const type = "Battleground";
       const { name, email, mobile, game } = values;
       const res = await fetch(
         "https://advik-cb2ad-default-rtdb.firebaseio.com/Battleground.json",
@@ -56,7 +57,6 @@ const Battleground = () => {
             type,
             game,
           }),
-          // body: [name, email, mobile, game],
         }
       );
       if (res.status === 200) {

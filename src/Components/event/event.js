@@ -19,7 +19,6 @@ const Event = () => {
     email: "",
     mobile: "",
     event: "",
-    type: "event",
   });
   const Validation = (arr) => {
     if (
@@ -43,7 +42,9 @@ const Event = () => {
       swal("Enter all details", "", "error");
       return;
     } else {
-      const { name, email, mobile, event, type } = values;
+      const { name, email, mobile, event } = values;
+      const type = "funzone";
+
       const res = await fetch(
         "https://advik-cb2ad-default-rtdb.firebaseio.com/Event.json",
         {
@@ -59,7 +60,7 @@ const Event = () => {
         }
       );
       if (res.status === 200) {
-        swal("Submitted", "good", "success");
+        swal("Submitted", "", "success");
         setValues({ name: "", email: "", mobile: "", event: "" });
       } else {
         swal("Error Happeend", "Try Again", "error");
