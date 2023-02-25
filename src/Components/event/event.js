@@ -52,6 +52,7 @@ const Event = () => {
             name,
             email,
             mobile,
+            type: "event",
             event,
           }),
         }

@@ -52,8 +52,10 @@ const Battleground = () => {
             name,
             email,
             mobile,
+            type: "Battleground",
             game,
           }),
+          // body: [name, email, mobile, game],
         }
       );
       if (res.status === 200) {
