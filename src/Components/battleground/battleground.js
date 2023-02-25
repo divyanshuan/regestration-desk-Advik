@@ -14,33 +14,56 @@ const Battleground = () => {
     variant: "outlined",
     fullWidth: true,
   };
-  const [values, setValues] = useState({ name: "", roll: "", game: "" });
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    game: "",
+  });
+  const Validation = (arr) => {
+    if (
+      arr.name === "" ||
+      arr.email === "" ||
+      arr.mobile === "" ||
+      arr.game === ""
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, roll, game } = values;
-    const res = await fetch(
-      "https://advik-cb2ad-default-rtdb.firebaseio.com/Battleground.json",
-      {
-        method: "POST",
-        Headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          roll,
-          game,
-        }),
-      }
-    );
-    if (res.status === 200) {
-      swal("Submitted", "good", "success");
-      setValues({ name: "", roll: "", game: "" });
+    if (!Validation(values)) {
+      swal("Enter all details", "", "error");
+      return;
     } else {
-      swal("Error Happeend", "Try Again", "error");
+      const { name, email, mobile, game } = values;
+      const res = await fetch(
+        "https://advik-cb2ad-default-rtdb.firebaseio.com/Battleground.json",
+        {
+          method: "POST",
+          Headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            mobile,
+            game,
+          }),
+        }
+      );
+      if (res.status === 200) {
+        swal("Submitted", "", "success");
+        setValues({ name: "", email: "", mobile: "", game: "" });
+      } else {
+        swal("Error Happeend", "Try Again", "error");
+      }
+      console.log(res);
     }
-    console.log(res);
   };
   return (
     <div>
@@ -61,13 +84,22 @@ const Battleground = () => {
             value={values.name}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
-            name="roll"
-            label="Roll No"
+            name="email"
+            label="Email"
             {...fields}
             onChange={handleChange}
-            value={values.roll}
+            value={values.email}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            name="mobile"
+            label="Mobile No"
+            {...fields}
+            onChange={handleChange}
+            value={values.mobile}
           />
         </Grid>
         <Grid item xs={2}>

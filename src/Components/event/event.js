@@ -14,31 +14,54 @@ const Event = () => {
     variant: "outlined",
     fullWidth: true,
   };
-  const [values, setValues] = useState({ name: "", roll: "", event: "" });
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    event: "",
+  });
+  const Validation = (arr) => {
+    if (
+      arr.name === "" ||
+      arr.email === "" ||
+      arr.mobile === "" ||
+      arr.event === ""
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, roll, event } = values;
-    const res = await fetch(
-      "https://advik-cb2ad-default-rtdb.firebaseio.com/Event.json",
-      {
-        method: "POST",
-        Headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          roll,
-          event,
-        }),
-      }
-    );
-    if (res.status === 200) {
-      swal("Submitted", "good", "success");
-      setValues({ name: "", roll: "", event: "" });
+    if (!Validation(values)) {
+      swal("Enter all details", "", "error");
+      return;
     } else {
-      swal("Error Happeend", "Try Again", "error");
+      const { name, email, mobile, event } = values;
+      const res = await fetch(
+        "https://advik-cb2ad-default-rtdb.firebaseio.com/Event.json",
+        {
+          method: "POST",
+          Headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            mobile,
+            event,
+          }),
+        }
+      );
+      if (res.status === 200) {
+        swal("Submitted", "good", "success");
+        setValues({ name: "", email: "", mobile: "", event: "" });
+      } else {
+        swal("Error Happeend", "Try Again", "error");
+      }
     }
   };
   return (
@@ -62,13 +85,22 @@ const Event = () => {
             value={values.name}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
-            name="roll"
-            label="Roll No"
+            name="email"
+            label="Email"
             {...fields}
             onChange={handleChange}
-            value={values.roll}
+            value={values.email}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            name="mobile"
+            label="Mobile No"
+            {...fields}
+            onChange={handleChange}
+            value={values.mobile}
           />
         </Grid>
         <Grid item xs={2}>
