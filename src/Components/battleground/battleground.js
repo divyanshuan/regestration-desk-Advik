@@ -19,6 +19,7 @@ const Battleground = () => {
     email: "",
     mobile: "",
     game: "",
+    type: "Battleground",
   });
   const Validation = (arr) => {
     if (
@@ -52,7 +53,7 @@ const Battleground = () => {
             name,
             email,
             mobile,
-            type: "Battleground",
+            type,
             game,
           }),
           // body: [name, email, mobile, game],

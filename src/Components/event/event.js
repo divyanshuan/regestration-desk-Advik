@@ -19,6 +19,7 @@ const Event = () => {
     email: "",
     mobile: "",
     event: "",
+    type: "event",
   });
   const Validation = (arr) => {
     if (
@@ -42,7 +43,7 @@ const Event = () => {
       swal("Enter all details", "", "error");
       return;
     } else {
-      const { name, email, mobile, event } = values;
+      const { name, email, mobile, event, type } = values;
       const res = await fetch(
         "https://advik-cb2ad-default-rtdb.firebaseio.com/Event.json",
         {
@@ -52,7 +53,7 @@ const Event = () => {
             name,
             email,
             mobile,
-            type: "event",
+            type,
             event,
           }),
         }
